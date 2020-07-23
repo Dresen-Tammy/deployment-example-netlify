@@ -8,82 +8,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  authorId  Int
-  content   String?
-  createdAt DateTime @default(now())
-  id        Int      @default(autoincrement()) @id
-  published Boolean  @default(false)
-  title     String
-  User      User     @relation(fields: [authorId], references: [id])
-}
-
-model Profile {
-  bio    String?
-  id     Int     @default(autoincrement()) @id
-  userId Int     @unique
-  User   User    @relation(fields: [userId], references: [id])
-}
-
-model User {
+model person {
   email   String   @unique
   id      Int      @default(autoincrement()) @id
   name    String?
-  Post    Post[]
-  Profile Profile?
+  post    post[]
+  profile profile?
 }
 
-model image {
-  alt                               String
-  description                       String
-  id                                Int         @default(autoincrement()) @id
-  source                            String      @unique
-  type                              image_type?
-  project_imageToproject_feature_id project[]   @relation("imageToproject_feature_id")
-  project_imageToproject_thumb_id   project[]   @relation("imageToproject_thumb_id")
+model post {
+  authorid  Int
+  content   String?
+  createdat DateTime @default(now())
+  id        Int      @default(autoincrement()) @id
+  published Boolean  @default(false)
+  title     String
+  person    person   @relation(fields: [authorid], references: [id])
 }
 
-model note {
-  id       Int    @default(autoincrement()) @id
-  note     String
-  skill_id Int
-  title    String
-  skill    skill  @relation(fields: [skill_id], references: [id])
-}
-
-model project {
-  feature_id                      Int?
-  id                              Int             @default(autoincrement()) @id
-  link                            String
-  slub                            String?
-  subtitle                        String
-  text                            String
-  thumb_id                        Int?
-  title                           String
-  image_imageToproject_feature_id image?          @relation("imageToproject_feature_id", fields: [feature_id], references: [id])
-  image_imageToproject_thumb_id   image?          @relation("imageToproject_thumb_id", fields: [thumb_id], references: [id])
-  project_skill                   project_skill[]
-}
-
-model project_skill {
-  id         Int     @default(autoincrement()) @id
-  project_id Int
-  skill_id   Int
-  project    project @relation(fields: [project_id], references: [id])
-  skill      skill   @relation(fields: [skill_id], references: [id])
-
-  @@unique([project_id, skill_id], name: "project_skill_project_id_skill_id_key")
-}
-
-model skill {
-  id            Int             @default(autoincrement()) @id
-  title         String?         @unique
-  note          note[]
-  project_skill project_skill[]
-}
-
-enum image_type {
-  feature
-  other
-  thumbnail
+model profile {
+  bio      String?
+  id       Int     @default(autoincrement()) @id
+  personid Int     @unique
+  person   person  @relation(fields: [personid], references: [id])
 }

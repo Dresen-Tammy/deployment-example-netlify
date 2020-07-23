@@ -3,13 +3,13 @@ const prisma = new PrismaClient()
 
 exports.handler = async (event, context, callback) => {
   try {
-    const users = await prisma.user.findMany({
+    const persons = await prisma.person.findMany({
       include: { profile: true }
     })
     return {
       statusCode: 200,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(users)
+      body: JSON.stringify(persons)
     }
   } catch (error) {
     console.error(error)

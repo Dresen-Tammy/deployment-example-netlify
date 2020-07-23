@@ -4,20 +4,20 @@ const prisma = new PrismaClient()
 exports.handler = async (event, context, callback) => {
   try {
     await Promise.all([prisma.profile.deleteMany(), prisma.post.deleteMany()])
-    await prisma.user.deleteMany()
+    await prisma.person.deleteMany()
 
-    const createdUser = await prisma.user.create({
-      data: seedUser
+    const createdPerson = await prisma.person.create({
+      data: seedPerson
     })
 
-    const createdUser2 = await prisma.user.create({
-      data: seedUser2
+    const createdPerson2 = await prisma.person.create({
+      data: seedPerson2
     })
 
     return {
       statusCode: 201,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify([createdUser, createdUser2])
+      body: JSON.stringify([createdPerson, createdPerson2])
     }
   } catch (error) {
     console.error(error)
@@ -25,7 +25,7 @@ exports.handler = async (event, context, callback) => {
   }
 }
 
-const seedUser = {
+const seedPerson = {
   email: 'jane@prisma.io',
   name: 'Jane',
   Profile: {
@@ -51,7 +51,7 @@ const seedUser = {
   },
 }
 
-const seedUser2 = {
+const seedPerson2 = {
   email: 'toru@prisma.io',
   name: 'Toru Takemitsu',
   Profile: {
