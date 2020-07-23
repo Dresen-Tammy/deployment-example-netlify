@@ -28,12 +28,12 @@ exports.handler = async (event, context, callback) => {
 const seedPerson = {
   email: 'jane@prisma.io',
   name: 'Jane',
-  Profile: {
+  profile: {
     create: {
       bio: 'Health Enthusiast',
     },
   },
-  Post: {
+  post: {
     create: [
       {
         title: 'Comparing Database Types: How Database Types Evolved to Meet Different Needs',
@@ -54,12 +54,12 @@ const seedPerson = {
 const seedPerson2 = {
   email: 'toru@prisma.io',
   name: 'Toru Takemitsu',
-  Profile: {
+  profile: {
     create: {
       bio: 'Musician',
     },
   },
-  Post: {
+  post: {
     create: [
       {
         title: 'Requiem for String Orchestra',
